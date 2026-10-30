@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fffaf5">
+  <meta name="description" content="王茱莉的個人自我介紹：一個活潑開朗、喜歡把日常過得有趣的人。">
+  <title>嗨，我是茱莉｜個人自我介紹</title>
+  <style>
+    /* 全站色彩與字體：以奶油白、珊瑚橘和深咖啡色，營造溫暖明亮的個人風格。 */
+    :root {
+      color-scheme: light;
+      --paper: #fffaf5;
+      --ink: #332923;
+      --muted: #77685e;
+      --accent: #e87959;
+      --accent-dark: #b94e36;
+      --peach: #f9e4d7;
+      --line: #eadfd6;
+      --serif: "Noto Serif TC", "Songti TC", Georgia, serif;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      scroll-behavior: smooth;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    a { color: inherit; }
+    button { font: inherit; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+
+    /* 導覽列連結到頁面各區，手機版會收合成可操作的選單。 */
+    .site-header {
+      position: absolute;
+      z-index: 5;
+      inset: 0 0 auto;
+      padding: 22px 0;
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; }
+    .brand {
+      text-decoration: none;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 34px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--accent-dark); }
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      color: var(--ink);
+      background: rgba(255, 250, 245, .9);
+      cursor: pointer;
+    }
+
+    /* 首屏先呈現名字、個人特質和照片，讓訪客快速認識主角。 */
+    .hero {
+      min-height: 710px;
+      display: grid;
+      align-items: center;
+      padding: 112px 0 74px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 82% 28%, rgba(249, 228, 215, .72), transparent 36%),
+        var(--paper);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      align-items: center;
+      gap: clamp(44px, 8vw, 110px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: var(--accent-dark);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .17em;
+    }
+    .eyebrow::before { content: ""; width: 26px; height: 1px; background: currentColor; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 {
+      margin-bottom: 20px;
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 6.7rem);
+      font-weight: 600;
+      letter-spacing: -.07em;
+      line-height: 1.08;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-copy {
+      max-width: 460px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 2;
+    }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: rgba(255, 255, 255, .55);
+      color: var(--muted);
+      font-size: .83rem;
+    }
+    .photo-frame { position: relative; max-width: 440px; justify-self: end; }
+    .photo-frame::before {
+      position: absolute;
+      z-index: 0;
+      inset: 22px -20px -20px 20px;
+      border: 1px solid #e8cbbb;
+      border-radius: 48% 48% 25px 25px;
+      content: "";
+    }
+    .portrait {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 48% 48% 22px 22px;
+      object-fit: cover;
+      object-position: 52% center;
+      box-shadow: 0 24px 70px rgba(83, 53, 38, .14);
+    }
+    .photo-note {
+      position: absolute;
+      z-index: 2;
+      right: -25px;
+      bottom: 30px;
+      padding: 13px 17px;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 32px rgba(83, 53, 38, .12);
+      color: var(--muted);
+      font-family: var(--serif);
+      font-size: .95rem;
+      transform: rotate(3deg);
+    }
+
+    /* 關於我把自我介紹整理成短段落，提升閱讀節奏。 */
+    .section { padding: 112px 0; }
+    .section-soft { background: #fff4ec; }
+    .section-heading { max-width: 630px; margin-bottom: 48px; }
+    .section-heading h2 {
+      margin-bottom: 16px;
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -.045em;
+      line-height: 1.3;
+    }
+    .section-heading p { color: var(--muted); line-height: 1.9; }
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
+    .big-number {
+      color: var(--accent);
+      font-family: var(--serif);
+      font-size: clamp(5rem, 11vw, 9rem);
+      letter-spacing: -.08em;
+      line-height: .95;
+    }
+    .number-caption { margin: 14px 0 0; color: var(--muted); line-height: 1.8; }
+    .about-copy { color: var(--muted); font-size: 1.02rem; line-height: 2.15; }
+    .about-copy p:last-child { margin-bottom: 0; }
+
+    /* 三張特質卡片呈現外向、細心與自在的不同面向。 */
+    .traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .trait-card {
+      min-height: 230px;
+      padding: 28px;
+      border: 1px solid rgba(232, 203, 187, .72);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .68);
+    }
+    .trait-icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 25px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--peach);
+      color: var(--accent-dark);
+      font-size: 1.1rem;
+    }
+    .trait-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+    .trait-card p { margin-bottom: 0; color: var(--muted); font-size: .92rem; line-height: 1.8; }
+
+    /* 興趣區用文字列出日常喜歡的事，方便日後自行新增內容。 */
+    .interest-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+    }
+    .interest {
+      min-height: 190px;
+      padding: 28px 24px 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .interest + .interest { padding-left: 28px; border-left: 1px solid var(--line); }
+    .interest small { color: var(--accent-dark); font-size: .75rem; letter-spacing: .13em; }
+    .interest h3 { margin: 15px 0 10px; font-family: var(--serif); font-size: 1.55rem; }
+    .interest p { margin-bottom: 0; color: var(--muted); font-size: .9rem; line-height: 1.8; }
+
+    /* 收尾引用她的個人期待，並提供回到頁首的簡單連結。 */
+    .closing { padding: 100px 0 94px; text-align: center; }
+    .closing blockquote {
+      max-width: 800px;
+      margin: 0 auto 28px;
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      line-height: 1.65;
+      letter-spacing: -.04em;
+    }
+    .closing blockquote span { color: var(--accent-dark); }
+    .back-top {
+      display: inline-block;
+      padding: 12px 20px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      color: var(--muted);
+      font-size: .88rem;
+      text-decoration: none;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .back-top:hover { border-color: var(--accent); color: var(--accent-dark); }
+    footer { padding: 22px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 12px; }
+
+    /* 支援進場淡入；停用動態偏好時保留內容可見，不影響閱讀。 */
+    .reveal { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+      .reveal.is-visible { opacity: 1; transform: none; }
+      html.js-ready .reveal { opacity: 0; transform: translateY(22px); }
+      html.js-ready .reveal.is-visible { opacity: 1; transform: none; }
+    }
+
+    /* 手機版改為單欄版面，導覽收合，並調整照片與留白。 */
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .site-header { padding: 14px 0; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links {
+        position: absolute;
+        top: 68px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 250, 245, .98);
+        box-shadow: 0 14px 36px rgba(83, 53, 38, .1);
+      }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 13px 4px; }
+      .nav-links a + a { border-top: 1px solid var(--line); }
+      .hero { min-height: auto; padding: 112px 0 74px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 42px; }
+      .hero-copy { font-size: .98rem; }
+      .photo-frame { width: min(83%, 370px); justify-self: center; }
+      .photo-note { right: -12px; }
+      .section { padding: 78px 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .big-number { font-size: 6rem; }
+      .traits { grid-template-columns: 1fr; }
+      .trait-card { min-height: auto; }
+      .trait-icon { margin-bottom: 17px; }
+      .interest-row { grid-template-columns: 1fr; }
+      .interest { min-height: auto; padding: 22px 0; }
+      .interest + .interest { padding-left: 0; border-left: 0; }
+      .closing { padding: 76px 0; }
+      .footer-row { flex-direction: column; }
+    }
+
+    /* 動態偏好設為減少時，頁面不播放平滑捲動或淡入動畫。 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列讓訪客快速前往自我介紹、特質與興趣區。 -->
+  <header class="site-header">
+    <nav class="wrap nav-row" aria-label="主要導覽">
+      <a class="brand" href="#top" aria-label="茱莉的自我介紹首頁">JULIE<span>.</span></a>
+      <button class="menu-toggle" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-links">☰</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#about">關於我</a>
+        <a href="#personality">我的特質</a>
+        <a href="#likes">喜歡的日常</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 首屏用一句話和個人照片建立親切的第一印象。 -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-text reveal">
+          <p class="eyebrow">NICE TO MEET YOU</p>
+          <h1 id="hero-title">嗨，我是<br><span>茱莉。</span></h1>
+          <p class="hero-copy">一個活潑開朗、熱愛搞笑，也喜歡把平凡日常過得有趣的人。很高興認識你！</p>
+          <div class="hero-meta" aria-label="個人小檔案">
+            <span class="pill">♈ 牡羊座</span>
+            <span class="pill">ENFP</span>
+            <span class="pill">20 歲</span>
+          </div>
+        </div>
+        <div class="photo-frame reveal">
+          <img class="portrait" src="我的照片.jpg" alt="茱莉在海邊的生活照">
+          <span class="photo-note">願你今天也有好心情 ☀</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 自我介紹區保留原本的個人描述，拆成容易閱讀的段落。 -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <p class="eyebrow">A LITTLE ABOUT ME</p>
+          <div class="big-number">20<span style="font-size:.42em">歲</span></div>
+          <p class="number-caption">牡羊座 A 型<br>開朗 ENFP，正在認真生活中。</p>
+        </div>
+        <div class="about-copy reveal">
+          <div class="section-heading">
+            <h2 id="about-title">外向是我的底色，<br>細心也是我的一面。</h2>
+          </div>
+          <p>平常的我活潑開朗、熱愛搞笑，也很擅長交朋友。希望能像小太陽一樣，為身邊的人帶來溫暖與歡樂。</p>
+          <p>雖然看起來大剌剌、沒什麼秘密，但其實我也有細膩的一面，會默默觀察大家的情緒與狀態，也懂得社交禮儀與人際相處的小技巧。</p>
+          <p>偶爾還會突然氣質起來，展現不一樣的自己——所以，和我相處大概每天都會有一點新鮮感！</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特質卡片用簡短文字呈現個性不同的面向。 -->
+    <section class="section section-soft" id="personality" aria-labelledby="personality-title">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">THE WAY I AM</p>
+          <h2 id="personality-title">希望和我相處，<br>就像曬到舒服的陽光。</h2>
+          <p>比起高冷的距離感，我更喜歡自然、自在又有溫度的相處方式。</p>
+        </div>
+        <div class="traits">
+          <article class="trait-card reveal">
+            <span class="trait-icon" aria-hidden="true">☀</span>
+            <h3>活力小太陽</h3>
+            <p>喜歡搞笑、喜歡交朋友，想把溫暖和歡樂分享給身邊的人。</p>
+          </article>
+          <article class="trait-card reveal">
+            <span class="trait-icon" aria-hidden="true">♡</span>
+            <h3>其實很細心</h3>
+            <p>看起來大剌剌，卻會留意大家的情緒，努力讓相處舒服自在。</p>
+          </article>
+          <article class="trait-card reveal">
+            <span class="trait-icon" aria-hidden="true">✦</span>
+            <h3>偶爾氣質登場</h3>
+            <p>活潑之外也有安靜優雅的一面，今天的我也可能和昨天不太一樣。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 興趣區分享她喜歡的打扮與和朋友相聚的日常。 -->
+    <section class="section" id="likes" aria-labelledby="likes-title">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">LITTLE JOYS</p>
+          <h2 id="likes-title">讓日常閃閃發亮的小事。</h2>
+          <p>假日最期待的，就是好好打扮，再和喜歡的人一起享受生活。</p>
+        </div>
+        <div class="interest-row">
+          <article class="interest reveal">
+            <small>01 / STYLE</small>
+            <h3>研究化妝與穿搭</h3>
+            <p>試試不同的妝容和搭配，找出最喜歡的自己。</p>
+          </article>
+          <article class="interest reveal">
+            <small>02 / WEEKEND</small>
+            <h3>漂漂亮亮出門</h3>
+            <p>假日打扮好自己，帶著好心情出發。</p>
+          </article>
+          <article class="interest reveal">
+            <small>03 / TOGETHER</small>
+            <h3>和朋友吃喝玩樂</h3>
+            <p>把平凡的一天，變成下次還會想起的快樂回憶。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 收尾用個人期待作結，邀請訪客帶著自在的心情認識她。 -->
+    <section class="closing section-soft" aria-label="給你的一句話">
+      <div class="wrap reveal">
+        <p class="eyebrow">HOPE WE FEEL AT EASE</p>
+        <blockquote>「讓大家在與我相處時，<br>總能感到<span>有趣、自在又舒服。</span>」</blockquote>
+        <a class="back-top" href="#top">回到最上方 ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 頁尾標示這是一份個人自我介紹練習作品。 -->
+  <footer>
+    <div class="wrap footer-row">
+      <span>王茱莉 · 個人自我介紹</span>
+      <span>一點陽光，一點可愛，還有好多生活的可能。</span>
+    </div>
+  </footer>
+
+  <script>
+    // 手機選單按鈕同步更新展開狀態，並在選取導覽項目後自動收合。
+    const menuButton = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "開啟選單" : "關閉選單");
+      navLinks.classList.toggle("is-open", !isOpen);
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "開啟選單");
+        navLinks.classList.remove("is-open");
+      });
+    });
+
+    // 元素進入畫面時淡入；若瀏覽器不支援觀察器，內容仍保持可見。
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.documentElement.classList.add("js-ready");
+      document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+    }
+  </script>
+</body>
+</html>
